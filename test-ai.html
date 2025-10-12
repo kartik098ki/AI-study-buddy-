@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Buddy - Quick Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .test-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .result {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            backdrop-filter: blur(5px);
+        }
+        .loading {
+            color: #ffd700;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+        .success {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .error {
+            color: #f87171;
+            font-weight: bold;
+        }
+        .demo-content {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 AI Study Buddy Test</h1>
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <button class="test-button" onclick="testAllFeatures()">🎯 Test All Features</button>
+            <button class="test-button" onclick="testSummary()">📝 Test Summary</button>
+            <button class="test-button" onclick="testFlashcards()">🎴 Test Flashcards</button>
+            <button class="test-button" onclick="testQuiz()">📋 Test Quiz</button>
+        </div>
+        
+        <div id="results"></div>
+
+        <div class="demo-content">
+The Solar System: Our Cosmic Neighborhood
+
+The solar system consists of the Sun and everything that orbits around it, including eight planets, dwarf planets, moons, asteroids, comets, and meteoroids. Formed approximately 4.6 billion years ago from the gravitational collapse of a giant interstellar molecular cloud, our solar system is located in the Orion Arm of the Milky Way galaxy.
+
+The Sun, a G-type main-sequence star, contains 99.86% of the system's known mass and dominates it gravitationally. The inner planets—Mercury, Venus, Earth, and Mars—are primarily composed of rock and metal, while the outer planets—Jupiter, Saturn, Uranus, and Neptune—are giant gas and ice worlds.
+
+Key Components:
+
+1. The Sun: At the center of our solar system, the Sun is a nearly perfect sphere of hot plasma that generates energy through nuclear fusion. Its core temperature reaches about 15 million degrees Celsius, converting hydrogen into helium through the proton-proton chain reaction.
+
+2. Inner Planets (Terrestrial):
+   - Mercury: Closest to the Sun, with extreme temperature variations
+   - Venus: Hottest planet due to runaway greenhouse effect
+   - Earth: Our home, the only known planet with life
+   - Mars: The "Red Planet" with the largest volcano in the solar system
+
+3. Outer Planets (Gas Giants):
+   - Jupiter: Largest planet with the Great Red Spot storm
+   - Saturn: Famous for its spectacular ring system
+   - Uranus: Tilted on its side, rotates backwards
+   - Neptune: Windiest planet with speeds up to 2,100 km/h
+
+4. Other Objects:
+   - Dwarf planets like Pluto and Ceres
+   - The asteroid belt between Mars and Jupiter
+   - The Kuiper Belt beyond Neptune
+   - The Oort Cloud, a theoretical sphere of icy objects
+
+Interesting Facts:
+- It takes light 8 minutes to travel from the Sun to Earth
+- Jupiter's moon Ganymede is larger than Mercury
+- Saturn is less dense than water and would float
+- A day on Venus is longer than its year
+- The solar system travels through space at 828,000 km/h
+
+Understanding our solar system helps us appreciate Earth's unique position and the delicate conditions that allow life to exist.
+        </div>
+    </div>
+
+    <script>
+        const sampleContent = `The Solar System: Our Cosmic Neighborhood
+
+The solar system consists of the Sun and everything that orbits around it, including eight planets, dwarf planets, moons, asteroids, comets, and meteoroids. Formed approximately 4.6 billion years ago from the gravitational collapse of a giant interstellar molecular cloud, our solar system is located in the Orion Arm of the Milky Way galaxy.
+
+The Sun, a G-type main-sequence star, contains 99.86% of the system's known mass and dominates it gravitationally. The inner planets—Mercury, Venus, Earth, and Mars—are primarily composed of rock and metal, while the outer planets—Jupiter, Saturn, Uranus, and Neptune—are giant gas and ice worlds.
+
+Key Components:
+
+1. The Sun: At the center of our solar system, the Sun is a nearly perfect sphere of hot plasma that generates energy through nuclear fusion. Its core temperature reaches about 15 million degrees Celsius, converting hydrogen into helium through the proton-proton chain reaction.
+
+2. Inner Planets (Terrestrial):
+   - Mercury: Closest to the Sun, with extreme temperature variations
+   - Venus: Hottest planet due to runaway greenhouse effect
+   - Earth: Our home, the only known planet with life
+   - Mars: The "Red Planet" with the largest volcano in the solar system
+
+3. Outer Planets (Gas Giants):
+   - Jupiter: Largest planet with the Great Red Spot storm
+   - Saturn: Famous for its spectacular ring system
+   - Uranus: Tilted on its side, rotates backwards
+   - Neptune: Windiest planet with speeds up to 2,100 km/h
+
+4. Other Objects:
+   - Dwarf planets like Pluto and Ceres
+   - The asteroid belt between Mars and Jupiter
+   - The Kuiper Belt beyond Neptune
+   - The Oort Cloud, a theoretical sphere of icy objects
+
+Interesting Facts:
+- It takes light 8 minutes to travel from the Sun to Earth
+- Jupiter's moon Ganymede is larger than Mercury
+- Saturn is less dense than water and would float
+- A day on Venus is longer than its year
+- The solar system travels through space at 828,000 km/h
+
+Understanding our solar system helps us appreciate Earth's unique position and the delicate conditions that allow life to exist.`;
+
+        function addResult(title, content, type = 'success') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `<strong>${title}:</strong>\n\n${content}`;
+            results.appendChild(div);
+        }
+
+        function addLoading(title) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = 'result loading';
+            div.innerHTML = `<strong>${title}:</strong>\n⏳ Processing...`;
+            div.id = 'loading-' + Date.now();
+            results.appendChild(div);
+            return div.id;
+        }
+
+        function updateLoading(id, content, type = 'success') {
+            const element = document.getElementById(id);
+            if (element) {
+                element.className = `result ${type}`;
+                element.innerHTML = content;
+            }
+        }
+
+        async function testSummary() {
+            const loadingId = addLoading('📝 Generating AI Summary');
+            try {
+                const response = await fetch('/api/generate-summary', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: sampleContent })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    updateLoading(loadingId, `✅ Summary Generated Successfully!\n\n${data.summary}`);
+                } else {
+                    updateLoading(loadingId, `❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                updateLoading(loadingId, `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testFlashcards() {
+            const loadingId = addLoading('🎴 Generating Flashcards');
+            try {
+                const response = await fetch('/api/generate-flashcards', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: sampleContent })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    const flashcardsText = data.flashcards.map((card, index) => 
+                        `🎴 Card ${index + 1} (${card.difficulty}):\nFront: ${card.front}\nBack: ${card.back}`
+                    ).join('\n\n');
+                    updateLoading(loadingId, `✅ Flashcards Generated Successfully! (${data.flashcards.length} cards)\n\n${flashcardsText}`);
+                } else {
+                    updateLoading(loadingId, `❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                updateLoading(loadingId, `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testQuiz() {
+            const loadingId = addLoading('📋 Generating Quiz');
+            try {
+                const response = await fetch('/api/generate-quiz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: sampleContent })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    const quizText = data.quiz.map((question, index) => 
+                        `❓ Question ${index + 1}:\n${question.question}\nA) ${question.options[0]}\nB) ${question.options[1]}\nC) ${question.options[2]}\nD) ${question.options[3]}\n✅ Correct: ${String.fromCharCode(65 + question.correctAnswer)}\n💡 ${question.explanation}`
+                    ).join('\n\n');
+                    updateLoading(loadingId, `✅ Quiz Generated Successfully! (${data.quiz.length} questions)\n\n${quizText}`);
+                } else {
+                    updateLoading(loadingId, `❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                updateLoading(loadingId, `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAllFeatures() {
+            document.getElementById('results').innerHTML = '';
+            await testSummary();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testFlashcards();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testQuiz();
+        }
+    </script>
+</body>
+</html>

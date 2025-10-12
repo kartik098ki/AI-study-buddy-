@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Buddy - Working Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #06b6d4 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #065f46;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .test-button {
+            background: linear-gradient(45deg, #10b981, #14b8a6);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        .result {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+        }
+        .loading {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            color: #92400e;
+            text-align: center;
+            padding: 20px;
+        }
+        .success {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            color: #065f46;
+        }
+        .error {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+        }
+        .demo-text {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 AI Study Buddy - Working Test</h1>
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <button class="test-button" onclick="testAll()">🚀 Test All Features</button>
+            <button class="test-button" onclick="testSummary()">📝 Test Summary</button>
+            <button class="test-button" onclick="testFlashcards()">🎴 Test Flashcards</button>
+            <button class="test-button" onclick="testQuiz()">📋 Test Quiz</button>
+        </div>
+        
+        <div id="results"></div>
+
+        <div class="demo-text">
+            <strong>Sample Content for Testing:</strong><br><br>
+            The water cycle is the continuous movement of water on, above, and below the surface of the Earth. Water can change states among liquid, vapor, and ice at various places in the water cycle. The water cycle involves the exchange of energy, which leads to temperature changes. When water undergoes evaporation, it takes up energy from its surroundings and cools the environment. When it condenses, it releases energy and warms the environment. These heat exchanges influence climate.
+        </div>
+    </div>
+
+    <script>
+        const sampleContent = `The water cycle is the continuous movement of water on, above, and below the surface of the Earth. Water can change states among liquid, vapor, and ice at various places in the water cycle. The water cycle involves the exchange of energy, which leads to temperature changes. When water undergoes evaporation, it takes up energy from its surroundings and cools the environment. When it condenses, it releases energy and warms the environment. These heat exchanges influence climate.`;
+
+        function addResult(title, content, type = 'success') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `<strong>${title}:</strong>\n\n${content}`;
+            results.appendChild(div);
+        }
+
+        function addLoading(title) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = 'loading';
+            div.innerHTML = `<strong>${title}:</strong>\n⏳ Processing...`;
+            div.id = 'loading-' + Date.now();
+            results.appendChild(div);
+            return div.id;
+        }
+
+        function updateLoading(id, content, type = 'success') {
+            const element = document.getElementById(id);
+            if (element) {
+                element.className = `result ${type}`;
+                element.innerHTML = content;
+            }
+        }
+
+        async function testSummary() {
+            const loadingId = addLoading('📝 Testing Summary API');
+            try {
+                const startTime = Date.now();
+                const response = await fetch('/api/generate-summary', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: sampleContent })
+                });
+                
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateLoading(loadingId, `✅ Summary API Working! (${endTime - startTime}ms)\n\nResponse:\n${data.summary}`);
+                } else {
+                    updateLoading(loadingId, `❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                updateLoading(loadingId, `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testFlashcards() {
+            const loadingId = addLoading('🎴 Testing Flashcards API');
+            try {
+                const startTime = Date.now();
+                const response = await fetch('/api/generate-flashcards', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: sampleContent })
+                });
+                
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const flashcardsText = data.flashcards.map((card, index) => 
+                        `Card ${index + 1} (${card.difficulty}):\nQ: ${card.front}\nA: ${card.back}`
+                    ).join('\n\n');
+                    updateLoading(loadingId, `✅ Flashcards API Working! (${endTime - startTime}ms, ${data.flashcards.length} cards)\n\n${flashcardsText}`);
+                } else {
+                    updateLoading(loadingId, `❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                updateLoading(loadingId, `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testQuiz() {
+            const loadingId = addLoading('📋 Testing Quiz API');
+            try {
+                const startTime = Date.now();
+                const response = await fetch('/api/generate-quiz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: sampleContent })
+                });
+                
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const quizText = data.quiz.map((question, index) => 
+                        `Q${index + 1}: ${question.question}\nA) ${question.options[0]}\nB) ${question.options[1]}\nC) ${question.options[2]}\nD) ${question.options[3]}\n✅ Correct: ${String.fromCharCode(65 + question.correctAnswer)}\n💡 ${question.explanation}`
+                    ).join('\n\n');
+                    updateLoading(loadingId, `✅ Quiz API Working! (${endTime - startTime}ms, ${data.quiz.length} questions)\n\n${quizText}`);
+                } else {
+                    updateLoading(loadingId, `❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                updateLoading(loadingId, `❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAll() {
+            document.getElementById('results').innerHTML = '';
+            await testSummary();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await testFlashcards();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await testQuiz();
+        }
+    </script>
+</body>
+</html>
