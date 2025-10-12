@@ -4,6 +4,8 @@
 
 A stunning, AI-powered learning platform that transforms how students study with intelligent document analysis, smart summaries, interactive flashcards, and personalized quizzes.
 
+ ## PROTOTYPE VIDEO ---  https://youtu.be/42scSZGzR64
+
 ## 🚀 What's New & Amazing
 
 ### ✨ **Stunning Visual Design**
