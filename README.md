@@ -36,7 +36,7 @@ A stunning, AI-powered learning platform that transforms how students study with
 - **Frontend**: Next.js 15 + TypeScript + Tailwind CSS
 - **UI Components**: shadcn/ui with custom styling
 - **Backend**: Next.js API Routes
-- **AI Service**: ZAI Web Dev SDK (Google Gemini API)
+- **AI Service**: Google Gemini API
 - **Animations**: CSS transitions + transforms
 - **Error Handling**: Comprehensive with fallbacks
 
